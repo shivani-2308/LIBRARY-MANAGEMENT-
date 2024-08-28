@@ -1,0 +1,250 @@
+import java.util.*;
+class Admin
+{
+    int f1=0;
+      ArrayList<String> Book_Name = new ArrayList<String>();
+      ArrayList<String> Book_Id = new ArrayList<String>();
+      ArrayList<String> isu_bo = new ArrayList<String>();
+      ArrayList<String> isu_id = new ArrayList<String>();
+    
+     void Add_Book(String b1,String b2)
+     {
+          Book_Name.add(b1);
+          Book_Id.add(b2);
+          System.out.println("Added");
+     }
+     void View_Book()
+     {
+          for(int i=0;i<Book_Name.size();i++)
+          {
+               System.out.println(Book_Name.get(i)+" "+Book_Id.get(i));
+          }
+     }
+     void Issued_books()
+     {
+         if(f1==0)
+         System.out.println("Null");
+         else 
+         {
+         for(int i=0;i<isu_bo.size();i++)
+         {
+         System.out.println(isu_bo.get(i)+" "+isu_id.get(i));
+         }
+         }
+     }
+     
+}
+class Student extends Admin
+{
+      ArrayList<String> Sname = new ArrayList<String>();
+      ArrayList<Integer> Spass = new ArrayList<Integer>();
+     ArrayList<Integer> sid = new ArrayList<Integer>();
+     void View_Book()
+     {
+         for(int i=0;i<Book_Name.size();i++)
+          {
+               System.out.println(Book_Name.get(i)+" "+Book_Id.get(i));
+          }
+     }
+     void Lend_Book(String A1,String A2,Integer A3)
+     {
+         int f=1;
+         for(int i=0;i<Book_Name.size();i++)
+         {
+             if(Book_Name.get(i).equals(A1) && Book_Id.get(i).equals(A2))
+             {
+                    isu_bo.add(Book_Name.get(i));
+                    isu_id.add(Book_Id.get(i));
+                    sid.add(A3);
+                    Book_Id.remove(i);
+                    Book_Name.remove(i);
+                    System.out.println("Book lended");
+                    f=0;
+                    f1=1;
+             }
+            
+         }
+         if(f==1)
+          System.out.println("Book unavailable or invalid Book_Id");
+         
+     }
+     void Return_Book(String C1,String C2,int C3)
+     {
+         int f2=0;
+         for(int i=0;i<sid.size();i++)
+         {
+             if(isu_bo.get(i).equals(C1) && isu_id.get(i).equals(C2) && sid.get(i)==C3)
+               { 
+                   Book_Name.add(C1);
+                   Book_Id.add(C2);
+                   System.out.println("Returned Sucessfully");
+                   f2=1;
+                   break;
+               }
+               
+         }
+         if(f2==0)
+         System.out.println("Invalid book");
+          
+     }
+     
+}
+public class Main
+{
+	public static void main(String[] args) {
+	     Scanner sc=new Scanner(System.in);
+	     String Ad = "shivani";
+	     int pass = 123;
+	     Student std = new Student();
+	     do{
+	          System.out.println("1.ADMIN");
+	          System.out.println("2.STUDENT");
+	          System.out.println("3.EXIT");
+	          int ch=sc.nextInt();
+	          if(ch==1)
+	          {
+	               System.out.println("ENTER USER NAME");
+	               String s=sc.next();
+	               System.out.println("ENTER PASSWORD");
+	               int p=sc.nextInt();
+	               if(s.equals(Ad)&&pass==p)
+	               {
+	                    do{
+	                         System.out.println("1.Add_Book");
+	                         System.out.println("2.View_Book");
+	                         System.out.println("3.Issued_Book");
+	                         System.out.println("4.Logout");
+	                         int Ach=sc.nextInt();
+	                         if(Ach==1)
+	                         {
+	                              System.out.println("Enter the book name");
+	                              String B1=sc.next();
+	                              System.out.println("Enter the book id");
+	                              String B2=sc.next();
+	                              std.Add_Book(B1,B2);
+	                         }
+	                         else if(Ach==2)
+	                         {
+	                              System.out.println("The books are");
+	                              std.View_Book();
+	                         }
+	                         else if(Ach==3)
+	                         {
+	                             //System.out.println("The issued books are");
+	                             std.Issued_books();
+	                         }
+	                         else if(Ach==4)
+	                         break;
+	                         else 
+	                         System.out.println("Invalid Choise");
+	                    }while(true);
+	               }
+	               else
+	               System.out.println("Invalid Username and Password");
+	          }
+	          else if(ch==2)
+	          {
+	               do{
+	                    System.out.println("1.Sign in");
+	                    System.out.println("2.Log in");
+	                    System.out.println("3.Exit");
+	                    int Sch=sc.nextInt();
+	                    if(Sch==1)
+	                    {
+	                         System.out.println("Enter name");
+	                         String n=sc.next();
+	                         std.Sname.add(n);
+	                         System.out.println("Enter password");
+	                         int p=sc.nextInt();
+	                         std.Spass.add(p);
+	                         System.out.println("Enter emailId");
+	                         sc.next();
+	                         System.out.println("****ACCOUNT CREATED SUCCESFULLY****");
+	                    }
+	                    else if(Sch==2)
+	                    {
+	                         System.out.println("Enter your name");
+	                         String n=sc.next();
+	                         System.out.println("Enter password");
+	                         int pwd=sc.nextInt();
+	                         int f=0,f1=0;
+	                         int j=0;
+	                         for(String i:std.Sname)
+	                         {
+	                              if(i.equals(n))
+	                              {
+	                                   j=std.Sname.indexOf(i);
+	                                   f=1;
+	                                   break;
+	                              }
+	                         }
+	                         
+	                         for(int i=0;i<std.Spass.size();i++)
+	                         {
+	                             if(i==j)
+	                             {
+	                              if(std.Spass.get(i)==pwd)
+	                              {
+	                                   f1=1;
+	                                   break;
+	                              }
+	                             }
+	                         }
+	                         if(f==1&&f1==1)
+	                         {
+	                              do{
+	                                   System.out.println("1.View_Book");
+	                                   System.out.println("2.Lend_Book");
+	                                   System.out.println("3.Return_Book");
+	                                   System.out.println("4.Logout");
+	                                   int stdch=sc.nextInt();
+	                                   if(stdch==1)
+	                                   {
+	                                        std.View_Book();
+	                                   }
+	                                   else if(stdch==2)
+	                                   {
+	                                       System.out.println("Enter the book wanted");
+	                                       String lbook=sc.next();
+	                                       System.out.println("Enter the book id");
+	                                       String lid=sc.next();
+	                                       System.out.println("Enter the student id");
+	                                       int suid=sc.nextInt();
+	                                       std.Lend_Book(lbook,lid,suid);
+	                                   }
+	                                   else if(stdch==3)
+	                                   {
+	                                       
+	                                        System.out.println("Name of the book to be returned");
+	                                        String rbook=sc.next();
+	                                        System.out.println("Enter the book id");
+	                                        String rid=sc.next();
+	                                        System.out.println("Enter student id");
+	                                        int sid=sc.nextInt();
+	                                        std.Return_Book(rbook,rid,sid);
+	                                   }
+	                                   else if(stdch==4)
+	                                   {
+	                                        break;
+	                                   }
+	                                   else 
+	                                   System.out.println("Invalid choise");
+	                              }while(true);
+	                         }
+	                         else 
+	                         System.out.println("Invalid username and password");
+	                         
+	                    }
+	                    else if(Sch==3)
+	                    break;
+	                    else 
+	                    System.out.println("Invalid choise");
+	               }while(true);
+	          }
+	          else if(ch==3)
+	          break;
+	          else 
+	          System.out.println("Invalid Choise");
+	     }while(true);
+	}
+}
